@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Books Home</title>
+</head>
+<body>
+	<div>
+		<div style="float: right">
+			<a href="/books/add">Add Book and Review</a> &nbsp; <a href="/logout">Logout</a>
+		</div>
+		<h1>Welcome, {{ userAlias }}</h1>
+	</div>
+	<div style="display: inline-block; width: 49%;">
+		<h2>Recent Book Reviews:</h2>
+		{% for review in recentReviews %}
+			<ul style="list-style: none">
+				<li><a href="books/{{ review.review_of.id }}">{{ review.review_of.title }}</a>
+					<ul style="list-style: none">
+						<li>Rating: {{ review.rating }}/5</li>
+						<li><a href="users/{{ review.left_by.id }}">{{ review.left_by.alias }}</a> says: {{ review.comment }}</li>
+						<li><em>Posted on {{ review.created_at }}</em></li>
+					</ul>
+				</li>
+			</ul>
+		{% endfor %}
+	</div>
+	<div style="display: inline-block; vertical-align: top; width: 49%;">
+		<h2>Other Books with Reviews:</h2>
+		<div style="border: 1px solid black; overflow: scroll; height: 300px;">
+			<ul style="list-style: none">
+				{% for review in reviewList %}
+					<li style="margin: 5px;"><a href="books/{{ review.review_of.id }}">{{ review.review_of.title }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

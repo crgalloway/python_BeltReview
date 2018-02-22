@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add a Book and Review</title>
+</head>
+<body>
+	<div style="float: right">
+		<a href="/books">Home</a> &nbsp; <a href="/logout">Logout</a>
+	</div>
+	<div>
+		<h2>Add a New Book Title and a Review:</h2>
+		<form action="/process" method="post">
+			{% csrf_token %}
+			<ul>
+				<li>Book Title: <input type="text" name="title"></li>
+				<li>Author:
+					<ul>
+						<li>Choose from the list:<select name="authorMenu">
+							<option selected="selected" value="">CHOOSE</option>
+							{% for author in authorList %}
+								<option value="{{ author.author }}">{{ author.author }}</option>
+							{% endfor %}
+						</select></li>
+					</ul>
+				</li>
+				<li>Or add a new author: <input type="text" name="authorText"></li>
+				<li>Review: <textarea cols="50" rows="4" name="comment"></textarea></li>
+				<li>Rating: <select name="rating">
+					<option value="5">5</option>
+					<option value="4">4</option>
+					<option value="3">3</option>
+					<option value="2">2</option>
+					<option value="1">1</option>
+				</select></li>
+			</ul>
+			<br>
+			<input type="submit" value="Add a Book and Review">
+		</form>
+	</div>
+	<div>
+		{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+					{% autoescape off %}
+						<li class="{{ message.tags }}">{{ message }}</li>
+					{% endautoescape %}
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+</body>
+</html>
